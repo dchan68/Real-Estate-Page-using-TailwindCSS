@@ -5,14 +5,14 @@ function Projects() {
   const [cardsToShow, setCardsToShow] = useState(1);
 
   useEffect(() => {
-    const updateCardsToSHow = () => {
+    const updateCardsToShow = () => {
       if (window.innerWidth >= 1024) {
         setCardsToShow(projectsData.length);
       } else {
         setCardsToShow(1);
       }
     };
-    updateCardsToSHow();
+    updateCardsToShow();
     window.addEventListener("resize", updateCardsToShow);
     return () => window.addEventListener("resize", updateCardsToShow);
   }, []);
