@@ -1,8 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { assets, projectsData } from "../assets/assets";
 function Projects() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsToShow, setCardsToShow] = useState(1);
+
+  useEffect(() => {
+    const updateCardsToSHow = () => {
+      if (window.innerWidth >= 1024) {
+        setCardsToShow(projectsData.length);
+      } else {
+        setCardsToShow(1);
+      }
+    };
+    updateCardsToSHow();
+    window.addEventListener("resize", updateCardsToShow);
+    return () => window.addEventListener("resize", updateCardsToShow);
+  }, []);
 
   const nextProject = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % projectsData.length);
@@ -47,8 +60,11 @@ function Projects() {
       </div>
       {/* Project slider container */}
       <div className="overflow-hidden">
-        <div className="flex gap-8 transition-transform duration-500 ease-in-out"
-        style={{transform: `translateX(-${(currentIndex * 100) / cardsToShow}%)`}}
+        <div
+          className="flex gap-8 transition-transform duration-500 ease-in-out"
+          style={{
+            transform: `translateX(-${(currentIndex * 100) / cardsToShow}%)`,
+          }}
         >
           {projectsData.map((project, index) => (
             <div key={index} className="relative flex-shrink-0 w-full sm:w-1/4">
